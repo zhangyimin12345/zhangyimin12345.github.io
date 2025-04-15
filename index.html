@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>zhangyimin12345's blog</title>
+    <title>文库</title>
     <style>
         .title-box {
             position: fixed;
@@ -16,6 +16,8 @@
             z-index: 100;
             text-align: center;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 800px;
         }
 
         .title {
@@ -25,16 +27,105 @@
             color: #333;
             margin: 0;
         }
+
+        a {
+            color: #3498db;
+            text-decoration: none;
+            background-image: linear-gradient(to right, #3498db, #3498db);
+            background-size: 0 2px;
+            background-position: 0 100%;
+            background-repeat: no-repeat;
+            transition: background-size 0.3s ease;
+            padding-bottom: 2px;
+        }
+
+        a:hover {
+            background-size: 100% 2px;
+        }
+
+        .search-container {
+            margin: 30px 0;
+        }
+
+        #search-input {
+            width: 70%;
+            padding: 12px 20px;
+            border: 2px solid #3498db;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        #search-input:focus {
+            width: 80%;
+            border-color: #2980b9;
+        }
+
+        #search-button {
+            padding: 12px 25px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-left: 10px;
+            transition: background-color 0.3s;
+        }
+
+        #search-button:hover {
+            background-color: #2980b9;
+        }
+
+        .results-container {
+            text-align: left;
+            margin-top: 30px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .result-item {
+            padding: 10px;
+            margin: 10px 0;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .result-item:hover {
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        .loading {
+            display: none;
+            margin: 20px 0;
+        }
+
+        .error {
+            color: #e74c3c;
+            margin: 20px 0;
+        }
     </style>
 </head>
 
 <body>
+    
     <div class="title-box">
-        <h1 class="title">Welcome to zhangyimin12345's blog</h1>
-        <h3>这里是zhangyimin12345的博客，但还没开始做~~~</h3>
+        <h1 class="title">Welcome to zhangyimin12345's blog!</h1>
+        <h3>这里是zhangyimin12345的博客，但还没做完，处于试验阶段，勿看~~~</h3>
         <h3>敬请期待！</h3>
-        <h3>1.<a href="https://www.luogu.com.cn/paste/ll1iyba5"
-                style="color: #3498db; text-decoration: none; font-weight: bold;">洛谷云剪贴板大通关</a></h3>
+        <h3>1.<a href="https://www.luogu.com.cn/paste/ll1iyba5">洛谷云剪贴板大通关</a></h3>
+        <!-- <h3>2.<a href="">文库</a></h3> -->
+        <!-- <h3>2.<a href="Deepseek-1.md">Deepseek-1.md</a></h3> -->
+        <h3>2.文库</h3>
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="搜索文库内容...">
+            <button id="search-button">搜索</button>
+        </div>
+        <div class="loading" id="loading">正在搜索中...</div>
+        <div class="error" id="error"></div>
+        <div class="results-container" id="results"></div>
     </div>
 </body>
 <script async="" type="text/javascript">
@@ -173,7 +264,7 @@
                     this._canvas.style["width"] = "100%";
                     this._canvas.style["height"] = "100%";
                     this._canvas.style["z-index"] = "-1";
-                    this._canvas.style["background-color"] = "#ffffff"; // Changed to white background
+                    this._canvas.style["background-color"] = "#ffffff";
                     this._canvas.id = "bgCanvas";
                     this._onResize();
                     this._context = this._canvas.getContext("2d");
@@ -441,6 +532,112 @@
             draw_canvas();
         }, 100);
     }();
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('search-input');
+        const searchButton = document.getElementById('search-button');
+        const resultsContainer = document.getElementById('results');
+        const loadingElement = document.getElementById('loading');
+        const errorElement = document.getElementById('error');
+        
+        // 使用GitHub API搜索仓库内容
+        async function searchGitHubFiles(query) {
+            loadingElement.style.display = 'block';
+            errorElement.textContent = '';
+            resultsContainer.innerHTML = '';
+            
+            try {
+                // 使用CORS代理访问GitHub API
+                const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+                const apiUrl = `https://api.github.com/search/code?q=${encodeURIComponent(query)}+repo:zhangyimin12345/zhangyimin12345.github.io`;
+                
+                const response = await fetch(proxyUrl + apiUrl, {
+                    headers: {
+                        'Accept': 'application/vnd.github.v3+json'
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`GitHub API请求失败: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                
+                if (data.items && data.items.length > 0) {
+                    data.items.forEach(item => {
+                        const resultItem = document.createElement('div');
+                        resultItem.className = 'result-item';
+                        
+                        // 创建文件链接，直接链接到GitHub上的文件
+                        const fileUrl = `https://github.com/zhangyimin12345/zhangyimin12345.github.io/blob/main/${item.path}`;
+                        resultItem.innerHTML = `<a href="${fileUrl}" target="_blank">${item.path}</a>`;
+                        resultsContainer.appendChild(resultItem);
+                    });
+                } else {
+                    resultsContainer.innerHTML = '<div class="result-item">没有找到匹配的文件</div>';
+                }
+            } catch (error) {
+                errorElement.textContent = '搜索时出错: ' + error.message;
+                console.error('搜索错误:', error);
+                
+                // 如果CORS代理失败，尝试直接调用GitHub API（可能在某些浏览器中工作）
+                if (error.message.includes('Failed to fetch')) {
+                    errorElement.textContent += ' 正在尝试直接调用GitHub API...';
+                    try {
+                        const directApiUrl = `https://api.github.com/search/code?q=${encodeURIComponent(query)}+repo:zhangyimin12345/zhangyimin12345.github.io`;
+                        const response = await fetch(directApiUrl, {
+                            headers: {
+                                'Accept': 'application/vnd.github.v3+json'
+                            }
+                        });
+                        
+                        if (!response.ok) {
+                            throw new Error(`直接API请求失败: ${response.status}`);
+                        }
+                        
+                        const data = await response.json();
+                        
+                        if (data.items && data.items.length > 0) {
+                            data.items.forEach(item => {
+                                const resultItem = document.createElement('div');
+                                resultItem.className = 'result-item';
+                                const fileUrl = `https://github.com/zhangyimin12345/zhangyimin12345.github.io/blob/main/${item.path}`;
+                                resultItem.innerHTML = `<a href="${fileUrl}" target="_blank">${item.path}</a>`;
+                                resultsContainer.appendChild(resultItem);
+                            });
+                        } else {
+                            resultsContainer.innerHTML = '<div class="result-item">没有找到匹配的文件</div>';
+                        }
+                    } catch (directError) {
+                        errorElement.textContent = '搜索时出错: ' + directError.message;
+                        console.error('直接API错误:', directError);
+                    }
+                }
+            } finally {
+                loadingElement.style.display = 'none';
+            }
+        }
+        
+        // 搜索按钮点击事件
+        searchButton.addEventListener('click', function() {
+            const query = searchInput.value.trim();
+            if (query) {
+                searchGitHubFiles(query);
+            }
+        });
+        
+        // 回车键搜索
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const query = searchInput.value.trim();
+                if (query) {
+                    searchGitHubFiles(query);
+                }
+            }
+        });
+    });
 </script>
 
 </html>
