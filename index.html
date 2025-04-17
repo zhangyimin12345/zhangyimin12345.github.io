@@ -3,9 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>zhangyimin12345's Blog</title>
-    <!-- 引入KaTeX CSS -->
+    <title>zhangyimin12345's blog</title>
+    <!-- 引入 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- <body style="min-height: 1500px; position: relative;"> -->
     <style>
         /* 顶栏样式 */
         .top-bar {
@@ -122,27 +125,64 @@
             border-radius: 5px;
             transition: background-color 0.3s;
             cursor: pointer;
+            border-left: 4px solid #3498db;
         }
 
         .result-item:hover {
             background-color: #f5f5f5;
         }
 
+        .result-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .result-tag {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 12px;
+            margin-right: 5px;
+            color: white;
+        }
+
+        .tag-recommended {
+            background-color: #f39c12;
+        }
+
+        .tag-recent {
+            background-color: #3498db;
+        }
+
+        .tag-academic {
+            background-color: #2ecc71;
+        }
+
+        .tag-tutorial {
+            background-color: #e74c3c;
+        }
+
+        .tag-entertainment {
+            background-color: #9b59b6;
+        }
+
         /* 文档查看器样式 */
         .doc-viewer {
+            background-color: rgba(255, 255, 255, 0);
             display: none;
             position: fixed;
             top: 70px;
             left: 0;
             width: 100%;
             height: calc(100% - 70px);
-            background-color: white;
             z-index: 1500;
             padding: 20px;
+            overflow-x: auto;
             overflow-y: auto;
         }
 
         .doc-header {
+            background-color: rgba(255, 255, 255, 0.7);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -170,6 +210,9 @@
             max-width: 800px;
             margin: 0 auto;
             line-height: 1.6;
+            overflow-x: auto;
+            overflow-y: auto;
+            background-color: rgba(255, 255, 255, 0);
         }
 
         /* Markdown样式 */
@@ -208,8 +251,8 @@
 
         /* 主内容样式 */
         .title-box {
-            position: fixed;
-            top: 200px;
+            position: absolute;
+            top: 350px;
             left: 50%;
             transform: translate(-50%, -50%);
             background-color: rgba(255, 255, 255, 0.7);
@@ -218,6 +261,9 @@
             z-index: 100;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             width: 90%;
+            height: 500px;
+            overflow-x: auto;
+            overflow-y: auto;
         }
 
         .title {
@@ -229,8 +275,8 @@
         }
 
         .links-box {
-            position: fixed;
-            top: 50%;
+            position: absolute;
+            top: 750px;
             left: 50%;
             transform: translate(-50%, -50%);
             background-color: rgba(255, 255, 255, 0.7);
@@ -239,11 +285,14 @@
             z-index: 100;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             width: 90%;
+            height: 150px;
+            overflow-x: auto;
+            overflow-y: auto;
         }
 
         .chat-box {
-            position: fixed;
-            top: 75%;
+            position: absolute;
+            top: 1050px;
             left: 50%;
             transform: translate(-50%, -50%);
             background-color: rgba(255, 255, 255, 0.7);
@@ -252,6 +301,10 @@
             z-index: 100;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             width: 90%;
+            height: 300px;
+            overflow-x: auto;
+            overflow-y: auto;
+            margin-bottom: 100px;
         }
 
         a {
@@ -280,8 +333,283 @@
             margin: 20px 0;
             text-align: center;
         }
+
+        /* 加载界面样式 */
+        .loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(30, 30, 30, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader {
+            position: relative;
+        }
+
+        .bar {
+            width: 15em;
+            height: 15em;
+            border-radius: 50%;
+            border: 8px solid transparent;
+            border-top: 8px solid rgb(255, 255, 255);
+            animation: spin 0.8s linear infinite;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: rotate(360deg);
+                opacity: 0.8;
+            }
+        }
+
+        /* 书本按钮样式 */
+        .book-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-left: 20px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .book-button:hover {
+            transform: scale(1.1);
+        }
+
+        .book-icon {
+            width: 30px;
+            height: 24px;
+            background-color: #3498db;
+            border-radius: 2px;
+            position: relative;
+            animation: flipPages 3s infinite, float 4s ease-in-out infinite;
+            transform-style: preserve-3d;
+        }
+
+        .book-icon:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            transform: translateZ(-1px);
+        }
+
+        .book-icon:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 50%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 0 2px 2px 0;
+            transform-origin: left;
+            animation: pageFlip 3s infinite;
+        }
+
+        .book-label {
+            margin-top: 5px;
+            font-size: 12px;
+            color: #333;
+            font-weight: bold;
+            animation: floatLabel 4s ease-in-out infinite;
+        }
+
+        @keyframes flipPages {
+
+            0%,
+            100% {
+                transform: perspective(200px) rotateY(0deg) translateY(0);
+            }
+
+            50% {
+                transform: perspective(200px) rotateY(-10deg) translateY(-5px);
+            }
+        }
+
+        @keyframes pageFlip {
+
+            0%,
+            100% {
+                transform: rotateY(0deg);
+            }
+
+            50% {
+                transform: rotateY(-30deg);
+            }
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        @keyframes floatLabel {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(2px);
+            }
+        }
+
+        /* 文章广场样式 */
+        .articles-square {
+            display: none;
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 100%;
+            height: calc(100% - 70px);
+            padding: 20px;
+            overflow-x: auto;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .tag-section {
+            margin-bottom: 30px;
+            max-width: 1200px;
+            margin: 0 auto 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .tag-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            grid-column: 1 / -1;
+        }
+
+        .tag-articles {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .tag-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .article-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .article-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .article-date {
+            font-size: 12px;
+            color: #777;
+            margin-bottom: 8px;
+        }
+
+        .article-excerpt {
+            font-size: 14px;
+            color: #555;
+            line-height: 1.4;
+        }
+
+        /* 筛选按钮样式 */
+        .filter-container {
+            display: flex;
+            margin-left: 20px;
+            gap: 10px;
+        }
+
+        .filter-btn {
+            padding: 5px 10px;
+            border: 1px solid #ddd;
+            border-radius: 15px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn.active {
+            background: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+
+        .reading-progress {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: #eee;
+            z-index: 1001;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0;
+            background: #3498db;
+            transition: width 0.2s;
+        }
+
+        .favorite-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #ccc;
+            transition: color 0.3s;
+        }
+
+        .favorite-btn.active {
+            color: #ffcc00;
+        }
     </style>
 
+    <!--讨论板块样式-->
     <style id="comments-style">
         #comments-1 {
             display: none;
@@ -291,690 +619,987 @@
             display: block;
         }
     </style>
-</head>
 
-<body>
-    <!-- 顶栏 -->
-    <div class="top-bar">
-        <div class="logo" id="home-button">zhangyimin12345's blog</div>
-        <p><strong>搜索文章：</strong></p>
-        <div class="search-container">
-            <input type="text" id="search-input" placeholder="搜索文章标题...">
-            <button id="search-button">Enter</button>
+    <!--Markdown标题大小提示-->
+    <style>
+        @media (min-height: 350px) {
+
+            h1 {
+                counter-increment: section-h1;
+            }
+
+            h1:hover::after {
+                content: " h1:" counter(section-h1);
+                color: lightgray;
+                display: inline;
+            }
+
+            h2 {
+                counter-increment: section-h2;
+            }
+
+            h2:hover::after {
+                content: " h2:" counter(section-h2);
+                color: lightgray;
+                display: inline;
+            }
+
+            h3 {
+                counter-increment: section-h3;
+            }
+
+            h3:hover::after {
+                content: " h3:" counter(section-h3);
+                color: lightgray;
+                display: inline;
+            }
+
+            h4 {
+                counter-increment: section-h4;
+            }
+
+            h4:hover::after {
+                content: " h4:" counter(section-h4);
+                color: lightgray;
+                display: inline;
+            }
+
+            h5 {
+                counter-increment: section-h5;
+            }
+
+            h5:hover::after {
+                content: " h5:" counter(section-h5);
+                color: lightgray;
+                display: inline;
+            }
+
+            h6 {
+                counter-increment: section-h6;
+            }
+
+            h6:hover::after {
+                content: " h6:" counter(section-h6);
+                color: lightgray;
+                display: inline;
+            }
+
+            h1::after,
+            h2::after,
+            h3::after,
+            h4::after,
+            h5::after,
+            h6::after {
+                transition: all .25s linear;
+                color: #0000;
+                content: "";
+                margin-left: -0.4375em;
+                display: inline;
+            }
+
+            h1:hover::after,
+            h2:hover::after,
+            h3:hover::after,
+            h4:hover::after,
+            h5:hover::after,
+            h6:hover::after {
+                transition: all .25s linear;
+                margin-left: 0 !important;
+            }
+        }
+    </style>
+    </head>
+
+    <body>
+        <!-- 添加加载动画 -->
+        <div class="loader-overlay" id="loader" style="display: flex; opacity: 1; z-index: 100000000;">
+            <div class="loader">
+                <div class="bar"></div>
+            </div>
+            <div style="position: fixed; opacity: 1; z-index: 10000001; color: #ffffff;">
+                <strong>拼命加载中，请稍等...<br>如果卡住了，<br>请刷新或检查网络。</strong>
+            </div>
         </div>
-    </div>
 
-    <!-- 搜索结果模态框 -->
-    <div class="modal" id="search-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title">搜索结果</div>
-                <button class="close-modal">&times;</button>
+        <!-- 顶栏 -->
+        <div class="top-bar">
+            <div class="logo" id="home-button">zhangyimin12345's blog</div>
+            <p><strong>搜索文章：</strong></p>
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="搜索文章标题...">
+                <button id="search-button">Enter</button>
             </div>
-            <div class="modal-body">
-                <div class="loading" id="loading">正在搜索中...</div>
-                <div class="error" id="error"></div>
-                <div class="results-container" id="results"></div>
+            <div class="book-button" id="articles-square-button">
+                <div class="book-icon"></div>
+                <div class="book-label">文章广场</div>
             </div>
         </div>
-    </div>
 
-    <!-- 文档查看器 -->
-    <div class="doc-viewer" id="doc-viewer">
-        <div class="doc-header">
-            <div class="doc-title" id="doc-title">文档标题</div>
-            <button class="close-doc" id="close-doc">&times;</button>
+        <!-- 搜索结果模态框 -->
+        <div class="modal" id="search-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title">搜索结果</div>
+                    <button class="close-modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="loading" id="loading">正在搜索中...</div>
+                    <div class="error" id="error"></div>
+                    <div class="results-container" id="results"></div>
+                </div>
+            </div>
         </div>
-        <div class="doc-content" id="doc-content"></div>
-    </div>
 
-    <div class="chat-box">
-        <main id="chat"> <span
-                style="display: inline-flex; flex-direction: row; flex-wrap: nowrap; align-content: flex-start; justify-content: flex-start; margin: 0; padding: 0; align-items: center; background-color: #F6F8FA; box-sizing: border-box; border-radius: .375rem; border-color: #d0d7de; border: 0 solid !important;">
-                <button id="utteranc-btn" onclick="showchatbox(1)" class="luogu-btn"> utteranc </button> <button
-                    id="giscus-btn" onclick="showchatbox(2)" class="luogu-btn"> giscus </button>
-                <script> function showchatbox(x) { if (x == 2) { document.getElementById("comments-style").innerHTML = `#comments-1 { display: none; } #comments-2 { display: block; }`; document.getElementById("giscus-btn").classList.add("clicked"); document.getElementById("utteranc-btn").classList.add("clicked"); document.getElementById("utteranc-btn").classList.remove("clicked"); } else { document.getElementById("comments-style").innerHTML = `#comments-2 { display: none; } #comments-1 { display: block; }`; document.getElementById("utteranc-btn").classList.add("clicked"); document.getElementById("giscus-btn").classList.add("clicked"); document.getElementById("giscus-btn").classList.remove("clicked"); } } </script>
-            </span>
-            <div id="comments-1">
-                <script src="https://utteranc.es/client.js" repo="zhangyimin12345/zhangyimin12345.github.io"
-                    label="Utterances" issue-term="url" theme="github-light" crossorigin="anonymous" async> </script>
+        <!-- 文档查看器 -->
+        <div class="doc-viewer" id="doc-viewer">
+            <div class="doc-header">
+                <div class="doc-title" id="doc-title"></div>
+                <button class="favorite-btn" data-article-id="1" style="top:20px;right: 50px;"><i class="fa fa-star">收藏</i></button>
+                <button class="close-doc" id="close-doc" style="right:25px !important;position:absolute;">&times;</button>
             </div>
-            <div id="comments-2">
-                <script src="https://giscus.app/client.js" data-repo="zhangyimin12345/zhangyimin12345.github.io"
-                    data-repo-id="R_kgDOOZajhg" data-category="Announcements" data-category-id="DIC_kwDOOZajhs4CpHRv"
-                    data-mapping="url" data-strict="1" data-reactions-enabled="1" data-emit-metadata="0"
-                    data-input-position="top" data-theme="light" data-lang="zh-CN" crossorigin="anonymous"
-                    async> </script>
+            <div class="reading-progress">
+                <div class="progress-bar"></div>
             </div>
-        </main>
-    </div>
+            <div class="doc-content" id="doc-content"></div>
+        </div>
 
-    <!-- 主内容 -->
-    <div class="title-box" id="main-content">
-        <h1 class="title">Welcome to zhangyimin12345's blog!</h1>
-        <h3>这里是zhangyimin12345的博客，只实现了部分功能，但可以放心使用~~~</h3>
-        <h3>敬请期待！</h3>
-    </div>
+        <div class="chat-box" id="chat-box">
+            <main id="chat"> <span
+                    style="display: inline-flex; flex-direction: row; flex-wrap: nowrap; align-content: flex-start; justify-content: flex-start; margin: 0; padding: 0; align-items: center; background-color: #F6F8FA; box-sizing: border-box; border-radius: .375rem; border-color: #d0d7de; border: 0 solid !important;">
+                    <button id="utteranc-btn" onclick="showchatbox(1)" class="luogu-btn"> utteranc </button> <button
+                        id="giscus-btn" onclick="showchatbox(2)" class="luogu-btn"> giscus </button>
+                    <script> function showchatbox(x) { if (x == 2) { document.getElementById("comments-style").innerHTML = `#comments - 1 { display: none; } #comments - 2 { display: block; } `; document.getElementById("giscus-btn").classList.add("clicked"); document.getElementById("utteranc-btn").classList.add("clicked"); document.getElementById("utteranc-btn").classList.remove("clicked"); } else { document.getElementById("comments-style").innerHTML = `#comments - 2 { display: none; } #comments - 1 { display: block; }`; document.getElementById("utteranc-btn").classList.add("clicked"); document.getElementById("giscus-btn").classList.add("clicked"); document.getElementById("giscus-btn").classList.remove("clicked"); } } </script>
+                </span>
+                <div id="comments-1">
+                    <script src="https://utteranc.es/client.js" repo="zhangyimin12345/zhangyimin12345.github.io"
+                        label="Utterances" issue-term="url" theme="github-light" crossorigin="anonymous"
+                        async> </script>
+                </div>
+                <div id="comments-2">
+                    <script src="https://giscus.app/client.js" data-repo="zhangyimin12345/zhangyimin12345.github.io"
+                        data-repo-id="R_kgDOOZajhg" data-category="Announcements"
+                        data-category-id="DIC_kwDOOZajhs4CpHRv" data-mapping="url" data-strict="1"
+                        data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light"
+                        data-lang="zh-CN" crossorigin="anonymous" async> </script>
+                </div>
+            </main>
+        </div>
 
-    <div class="links-box">
-        <h1>链接</h1>
-        <h3>1.<a href="https://www.luogu.com.cn/paste/ll1iyba5">洛谷云剪贴板大通关</a></h3>
-    </div>
+        <!-- 主内容 -->
+        <div class="title-box" id="main-content">
+            <h1 class="title">Welcome to zhangyimin12345's blog!</h1>
+            <h3>这里是zhangyimin12345的博客，部分功能还没实现，但可以放心使用~~~</h3>
+            <h3>以下是已实现的功能：</h3>
+            <h3>1.文章广场：可以查看所有文章，点击文章标题可以查看文章内容。</h3>
+            <h3>2.搜索文章：可以通过文章标题搜索文章。</h3>
+            <h3>3.文章查看器：可以查看文章内容。</h3>
+            <h3>4.讨论板块：可以查看这个网页的讨论。</h3>
+            <h3>由于正忙着增加功能，只有一篇文章~~~，用于测试~~~</h3>
+            <h3>敬请期待！</h3>
+        </div>
 
-    <!-- 引入Marked.js和KaTeX -->
-    <script src="https://cdn.jsdelivr.net/npm/marked@4.0.0/marked.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+        <div class="links-box" id="links-box">
+            <h1>链接</h1>
+            <h3>1.<a href="https://www.luogu.com.cn/paste/ll1iyba5">洛谷云剪贴板大通关</a></h3>
+        </div>
 
-    <!-- 背景效果脚本保持不变 -->
-    <script async="" type="text/javascript">
-        // 原有的Ribbons背景脚本...
-    </script>
-    <script type="text/javascript">
-        // 原有的网格背景脚本...
-    </script>
+        <!-- 引入Marked.js和KaTeX -->
+        <script src="https://cdn.jsdelivr.net/npm/marked@4.0.0/marked.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const searchInput = document.getElementById('search-input');
-            const searchButton = document.getElementById('search-button');
-            const resultsContainer = document.getElementById('results');
-            const loadingElement = document.getElementById('loading');
-            const errorElement = document.getElementById('error');
-            const searchModal = document.getElementById('search-modal');
-            const closeModal = document.querySelector('.close-modal');
-            const docViewer = document.getElementById('doc-viewer');
-            const docTitle = document.getElementById('doc-title');
-            const docContent = document.getElementById('doc-content');
-            const closeDoc = document.getElementById('close-doc');
-            const homeButton = document.getElementById('home-button');
-            const mainContent = document.getElementById('main-content');
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const searchInput = document.getElementById('search-input');
+                const searchButton = document.getElementById('search-button');
+                const resultsContainer = document.getElementById('results');
+                const loadingElement = document.getElementById('loading');
+                const errorElement = document.getElementById('error');
+                const searchModal = document.getElementById('search-modal');
+                const closeModal = document.querySelector('.close-modal');
+                const docViewer = document.getElementById('doc-viewer');
+                const docTitle = document.getElementById('doc-title');
+                const docContent = document.getElementById('doc-content');
+                const closeDoc = document.getElementById('close-doc');
+                const homeButton = document.getElementById('home-button');
+                const mainContent = document.getElementById('main-content');
+                const linksContent = document.getElementById('links-box');
+                const chatContent = document.getElementById('chat-box');
 
-            // 配置Marked.js以支持KaTeX
-            marked.setOptions({
-                breaks: true,
-                highlight: function (code, lang) {
-                    return code;
-                }
-            });
+                // 获取文章广场按钮和容器
+                const articlesSquareButton = document.getElementById('articles-square-button');
+                const articlesSquare = document.createElement('div');
+                articlesSquare.className = 'articles-square';
+                articlesSquare.id = 'articles-square';
+                document.body.appendChild(articlesSquare);
 
-            // 渲染KaTeX公式
-            function renderMath() {
-                renderMathInElement(docContent, {
-                    delimiters: [
-                        { left: '$$', right: '$$', display: true },
-                        { left: '$', right: '$', display: false },
-                        { left: '\\(', right: '\\)', display: false },
-                        { left: '\\[', right: '\\]', display: true }
-                    ],
-                    throwOnError: false
+                // 配置Marked.js以支持KaTeX
+                marked.setOptions({
+                    breaks: true,
+                    highlight: function (code, lang) {
+                        return code;
+                    }
                 });
-            }
 
-            // 显示模态框
-            function showModal() {
-                searchModal.style.display = 'flex';
-            }
-
-            // 隐藏模态框
-            function hideModal() {
-                searchModal.style.display = 'none';
-            }
-
-            // 显示文档查看器
-            function showDocViewer(title) {
-                docTitle.textContent = title;
-                docViewer.style.display = 'block';
-                mainContent.style.display = 'none';
-            }
-
-            // 隐藏文档查看器
-            function hideDocViewer() {
-                docViewer.style.display = 'none';
-                mainContent.style.display = 'block';
-            }
-
-            // 加载并渲染文档
-            async function loadAndRenderDoc(url, title) {
-                showDocViewer(title);
-                docContent.innerHTML = '<div class="loading">正在加载文档...</div>';
-
-                try {
-                    const response = await fetch(url);
-                    if (!response.ok) {
-                        throw new Error('文档加载失败');
-                    }
-                    const markdown = await response.text();
-                    docContent.innerHTML = marked.parse(markdown);
-                    renderMath();
-                } catch (error) {
-                    docContent.innerHTML = `<div class="error">加载文档时出错: ${error.message}</div>`;
+                // 渲染KaTeX公式
+                function renderMath() {
+                    renderMathInElement(docContent, {
+                        delimiters: [
+                            { left: '$$', right: '$$', display: true },
+                            { left: '$', right: '$', display: false },
+                            { left: '\\(', right: '\\)', display: false },
+                            { left: '\\[', right: '\\]', display: true }
+                        ],
+                        throwOnError: false
+                    });
                 }
-            }
 
-            // 点击模态框外部关闭
-            searchModal.addEventListener('click', function (e) {
-                if (e.target === searchModal) {
-                    hideModal();
+                // 显示模态框
+                function showModal() {
+                    searchModal.style.display = 'flex';
                 }
-            });
 
-            // 点击关闭按钮关闭
-            closeModal.addEventListener('click', hideModal);
+                // 隐藏模态框
+                function hideModal() {
+                    searchModal.style.display = 'none';
+                }
 
-            // 点击关闭文档按钮
-            closeDoc.addEventListener('click', hideDocViewer);
+                // 显示文档查看器
+                function showDocViewer(title) {
+                    docTitle.textContent = title;
+                    docViewer.style.display = 'block';
+                    mainContent.style.display = 'none';
+                    linksContent.style.display = 'none';
+                    chatContent.style.display = 'none';
+                    articlesSquare.style.display = 'none';
+                }
 
-            // 点击首页按钮
-            homeButton.addEventListener('click', hideDocViewer);
+                // 隐藏文档查看器
+                function hideDocViewer() {
+                    docViewer.style.display = 'none';
+                    mainContent.style.display = 'block';
+                    linksContent.style.display = 'block';
+                    chatContent.style.display = 'block';
+                    articlesSquare.style.display = 'none';
+                }
 
-            // 模拟GitHub API搜索
-            function searchGitHubFiles(query) {
-                showModal();
-                loadingElement.style.display = 'block';
-                errorElement.textContent = '';
-                resultsContainer.innerHTML = '';
+                // 加载并渲染文档
+                async function loadAndRenderDoc(url, title) {
+                    showDocViewer(title);
+                    docContent.innerHTML = '<div class="loading">正在加载文档...</div>';
 
-                // 模拟延迟
-                setTimeout(() => {
                     try {
-                        // 模拟搜索结果
-                        const mockResults = [
-                            {
-                                name: 'Deepseek-1.md',
-                                path: 'Deepseek-1.md',
-                                html_url: 'https://hub.gitmirror.com/https://raw.githubusercontent.com/zhangyimin12345/zhangyimin12345.github.io/main/Deepseek-1.md',
-                                title: 'DeepSeek | 中文官网、DeepSeek网页版、API 调用和本地部署教程 | 最全使用指南~ 【2025年4月更新】'
-                            },
-                        ].filter(item =>
-                            item.name.toLowerCase().includes(query.toLowerCase()) ||
-                            item.path.toLowerCase().includes(query.toLowerCase())
-                        );
-
-                        if (mockResults.length === 0) {
-                            resultsContainer.innerHTML = '<div class="result-item">没有找到匹配的文件</div>';
-                        } else {
-                            mockResults.forEach(result => {
-                                const item = document.createElement('div');
-                                item.className = 'result-item';
-                                item.textContent = result.path;
-                                item.addEventListener('click', () => {
-                                    hideModal();
-                                    loadAndRenderDoc(result.html_url, result.title);
-                                });
-                                resultsContainer.appendChild(item);
-                            });
+                        const response = await fetch(url);
+                        if (!response.ok) {
+                            throw new Error('文档加载失败');
                         }
-
-                        loadingElement.style.display = 'none';
+                        const markdown = await response.text();
+                        docContent.innerHTML = marked.parse(markdown);
+                        renderMath();
                     } catch (error) {
-                        loadingElement.style.display = 'none';
-                        errorElement.textContent = '搜索时出错: ' + error.message;
+                        docContent.innerHTML = `< div class="error" > 加载文档时出错: ${error.message}</div >`;
                     }
-                }, 800);
-            }
-
-            // 搜索按钮点击事件
-            searchButton.addEventListener('click', function () {
-                const query = searchInput.value.trim();
-                if (query) {
-                    searchGitHubFiles(query);
                 }
-            });
 
-            // 回车键搜索
-            searchInput.addEventListener('keypress', function (e) {
-                if (e.key === 'Enter') {
+                // 点击模态框外部关闭
+                searchModal.addEventListener('click', function (e) {
+                    if (e.target === searchModal) {
+                        hideModal();
+                    }
+                });
+
+                // 点击关闭按钮关闭
+                closeModal.addEventListener('click', hideModal);
+
+                // 点击关闭文档按钮
+                closeDoc.addEventListener('click', hideDocViewer);
+
+                // 点击首页按钮
+                homeButton.addEventListener('click', function () {
+                    hideDocViewer();
+                    articlesSquare.style.display = 'none';
+                });
+
+
+                // 模拟GitHub API搜索
+                function searchGitHubFiles(query) {
+                    showModal();
+                    loadingElement.style.display = 'block';
+                    errorElement.textContent = '';
+                    resultsContainer.innerHTML = '';
+
+                    // 模拟延迟
+                    setTimeout(() => {
+                        try {
+                            // 模拟搜索结果
+                            const mockResults = [
+                                {
+                                    name: 'DeepSeek | 中文官网、DeepSeek网页版、API 调用和本地部署教程 | 最全使用指南~ 【2025年4月更新】',
+                                    path: 'DeepSeek | 中文官网、DeepSeek网页版、API 调用和本地部署教程 | 最全使用指南~ 【2025年4月更新】',
+                                    html_url: 'https://hub.gitmirror.com/https://raw.githubusercontent.com/zhangyimin12345/zhangyimin12345.github.io/main/Deepseek-1.md',
+                                    title: 'DeepSeek | 中文官网、DeepSeek网页版、API 调用和本地部署教程 | 最全使用指南~ 【2025年4月更新】',
+                                    tag: ['推荐阅读', '最近更新', '教程']
+                                }
+                            ].filter(item =>
+                                item.name.toLowerCase().includes(query.toLowerCase()) ||
+                                item.path.toLowerCase().includes(query.toLowerCase())
+                            );
+
+                            if (mockResults.length === 0) {
+                                resultsContainer.innerHTML = '<div class="result-item">没有找到匹配的文件</div>';
+                            } else {
+                                mockResults.forEach(result => {
+                                    const item = document.createElement('div');
+                                    item.className = 'result-item';
+
+                                    // 创建标题元素
+                                    const titleElement = document.createElement('div');
+                                    titleElement.className = 'result-title';
+                                    titleElement.textContent = result.path;
+
+                                    // 创建标签元素容器
+                                    const tagContainer = document.createElement('div');
+
+                                    // 迭代并创建每个标签元素
+                                    result.tag.forEach(tag => {
+                                        const tagElement = document.createElement('span');
+                                        tagElement.className = 'result-tag';
+
+                                        // 根据标签类型设置不同的样式类
+                                        switch (tag) {
+                                            case '推荐阅读':
+                                                tagElement.classList.add('tag-recommended');
+                                                break;
+                                            case '最近更新':
+                                                tagElement.classList.add('tag-recent');
+                                                break;
+                                            case '纯学术':
+                                            case '学术':
+                                                tagElement.classList.add('tag-academic');
+                                                break;
+                                            case '教程':
+                                                tagElement.classList.add('tag-tutorial');
+                                                break;
+                                            case '娱乐':
+                                                tagElement.classList.add('tag-entertainment');
+                                                break;
+                                            default:
+                                                tagElement.classList.add('tag-recommended');
+                                        }
+
+                                        tagElement.textContent = tag;
+                                        tagContainer.appendChild(tagElement);
+                                    });
+
+                                    // 将标题和标签容器添加到结果项中
+                                    item.appendChild(titleElement);
+                                    item.appendChild(tagContainer);
+
+                                    item.addEventListener('click', () => {
+                                        hideModal();
+                                        loadAndRenderDoc(result.html_url, result.title);
+                                    });
+                                    resultsContainer.appendChild(item);
+                                });
+                            }
+
+                            loadingElement.style.display = 'none';
+                        } catch (error) {
+                            loadingElement.style.display = 'none';
+                            errorElement.textContent = '搜索时出错: ' + error.message;
+                        }
+                    }, 800);
+                }
+
+                // 搜索按钮点击事件
+                searchButton.addEventListener('click', function () {
                     const query = searchInput.value.trim();
                     if (query) {
                         searchGitHubFiles(query);
                     }
+                });
+
+                // 回车键搜索
+                searchInput.addEventListener('keypress', function (e) {
+                    if (e.key === 'Enter') {
+                        const query = searchInput.value.trim();
+                        if (query) {
+                            searchGitHubFiles(query);
+                        }
+                    }
+                });
+
+                // 显示文章广场
+                function showArticlesSquare() {
+                    // 隐藏其他内容
+                    docViewer.style.display = 'none';
+                    mainContent.style.display = 'none';
+                    linksContent.style.display = 'none';
+                    chatContent.style.display = 'none';
+
+                    // 显示文章广场
+                    articlesSquare.style.display = 'block';
+
+                    // 如果文章广场内容为空，则动态加载
+                    if (articlesSquare.innerHTML === '') {
+                        loadArticlesSquare();
+                    }
+                }
+
+                // 加载文章广场内容
+                function loadArticlesSquare() {
+                    articlesSquare.innerHTML = '<div class="loading">正在加载文章广场...</div>';
+
+                    // 模拟异步加载文章数据
+                    setTimeout(() => {
+                        const mockArticles = {
+                            '推荐阅读': [
+                                {
+                                    title: 'DeepSeek | 中文官网、DeepSeek网页版、API 调用和本地部署教程 | 最全使用指南~ 【2025年4月更新】',
+                                    url: 'https://hub.gitmirror.com/https://raw.githubusercontent.com/zhangyimin12345/zhangyimin12345.github.io/main/Deepseek-1.md',
+                                    date: '2025年4月1日',
+                                    excerpt: '本文详细介绍了DeepSeek的官方资源获取途径、网页版使用方法、API调用指南以及本地部署教程，是最全面的DeepSeek使用指南。'
+                                }
+                            ],
+                            '最近更新': [
+                                {
+                                    title: 'DeepSeek | 中文官网、DeepSeek网页版、API 调用和本地部署教程 | 最全使用指南~ 【2025年4月更新】',
+                                    url: 'https://hub.gitmirror.com/https://raw.githubusercontent.com/zhangyimin12345/zhangyimin12345.github.io/main/Deepseek-1.md',
+                                    date: '2025年4月1日',
+                                    excerpt: '本文详细介绍了DeepSeek的官方资源获取途径、网页版使用方法、API调用指南以及本地部署教程，是最全面的DeepSeek使用指南。'
+                                }
+                            ],
+                            '教程': [
+                                {
+                                    title: 'DeepSeek | 中文官网、DeepSeek网页版、API 调用和本地部署教程 | 最全使用指南~ 【2025年4月更新】',
+                                    url: 'https://hub.gitmirror.com/https://raw.githubusercontent.com/zhangyimin12345/zhangyimin12345.github.io/main/Deepseek-1.md',
+                                    date: '2025年4月1日',
+                                    excerpt: '本文详细介绍了DeepSeek的官方资源获取途径、网页版使用方法、API调用指南以及本地部署教程，是最全面的DeepSeek使用指南。'
+                                }
+                            ],
+                            // '学术': [
+
+                            // ],
+                            // '娱乐': [
+
+                            // ]
+                        };
+
+                        let html = '';
+                        for (const [tag, articles] of Object.entries(mockArticles)) {
+                            html += `
+        <div class="tag-section">
+            <div class="tag-header">
+                <div class="tag-title">${tag}</div>
+                <span class="result-tag ${getTagClass(tag)}">${tag}</span>
+            </div>
+            <div class="tag-articles">
+                ${articles.map(article => `
+                    <div class="article-card" data-url="${article.url}" data-title="${article.title}">
+                        <div class="article-title">${article.title}</div>
+                        <div class="article-date">${article.date}</div>
+                        <div class="article-excerpt">${article.excerpt}</div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `;
+                        }
+
+                        articlesSquare.innerHTML = html;
+
+                        // 添加文章卡片点击事件
+                        document.querySelectorAll('.article-card').forEach(card => {
+                            card.addEventListener('click', function () {
+                                const url = this.getAttribute('data-url');
+                                const title = this.getAttribute('data-title');
+                                loadAndRenderDoc(url, title);
+                            });
+                        });
+                    }, 500);
+                }
+
+                // 根据标签获取对应的CSS类
+                function getTagClass(tag) {
+                    switch (tag) {
+                        case '推荐阅读': return 'tag-recommended';
+                        case '教程': return 'tag-tutorial';
+                        case '学术': return 'tag-academic';
+                        case '娱乐': return 'tag-entertainment';
+                        default: return 'tag-recent';
+                    }
+                }
+
+                // 绑定文章广场按钮点击事件
+                articlesSquareButton.addEventListener('click', showArticlesSquare);
+            });
+        </script>
+
+        <!-- 彩带背景-->
+        <script async="" type="text/javascript">
+            (function (name, factory) {
+                if (typeof window === "object") {
+                    window[name] = factory();
+                }
+            })("Ribbons", function () {
+                var _w = window, _b = document.body, _d = document.documentElement;
+                var random = function () {
+                    if (arguments.length === 1) {
+                        if (Array.isArray(arguments[0])) {
+                            var index = Math.round(random(0, arguments[0].length - 1));
+                            return arguments[0][index];
+                        }
+                        return random(0, arguments[0]);
+                    } else if (arguments.length === 2) {
+                        return Math.random() * (arguments[1] - arguments[0]) + arguments[0];
+                    }
+                    return 0;
+                };
+                var screenInfo = function (e) {
+                    var width = Math.max(0, _w.innerWidth || _d.clientWidth || _b.clientWidth || 0),
+                        height = Math.max(0, _w.innerHeight || _d.clientHeight || _b.clientHeight || 0),
+                        scrollx = Math.max(0, _w.pageXOffset || _d.scrollLeft || _b.scrollLeft || 0) - (_d.clientLeft || 0),
+                        scrolly = Math.max(0, _w.pageYOffset || _d.scrollTop || _b.scrollTop || 0) - (_d.clientTop || 0);
+                    return {
+                        width: width,
+                        height: height,
+                        ratio: width / height,
+                        centerx: width / 2,
+                        centery: height / 2,
+                        scrollx: scrollx,
+                        scrolly: scrolly
+                    };
+                };
+                var mouseInfo = function (e) {
+                    var screen = screenInfo(e), mousex = e ? Math.max(0, e.pageX || e.clientX || 0) : 0,
+                        mousey = e ? Math.max(0, e.pageY || e.clientY || 0) : 0;
+                    return {
+                        mousex: mousex,
+                        mousey: mousey,
+                        centerx: mousex - screen.width / 2,
+                        centery: mousey - screen.height / 2
+                    };
+                };
+                var Point = function (x, y) {
+                    this.x = 0;
+                    this.y = 0;
+                    this.set(x, y);
+                };
+                Point.prototype = {
+                    constructor: Point, set: function (x, y) {
+                        this.x = x || 0;
+                        this.y = y || 0;
+                    }, copy: function (point) {
+                        this.x = point.x || 0;
+                        this.y = point.y || 0;
+                        return this;
+                    }, multiply: function (x, y) {
+                        this.x *= x || 1;
+                        this.y *= y || 1;
+                        return this;
+                    }, divide: function (x, y) {
+                        this.x /= x || 1;
+                        this.y /= y || 1;
+                        return this;
+                    }, add: function (x, y) {
+                        this.x += x || 0;
+                        this.y += y || 0;
+                        return this;
+                    }, subtract: function (x, y) {
+                        this.x -= x || 0;
+                        this.y -= y || 0;
+                        return this;
+                    }, clampX: function (min, max) {
+                        this.x = Math.max(min, Math.min(this.x, max));
+                        return this;
+                    }, clampY: function (min, max) {
+                        this.y = Math.max(min, Math.min(this.y, max));
+                        return this;
+                    }, flipX: function () {
+                        this.x *= -1;
+                        return this;
+                    }, flipY: function () {
+                        this.y *= -1;
+                        return this;
+                    }
+                };
+                var Factory = function (options) {
+                    this._canvas = null;
+                    this._context = null;
+                    this._sto = null;
+                    this._width = 0;
+                    this._height = 0;
+                    this._scroll = 0;
+                    this._ribbons = [];
+                    this._options = {
+                        colorSaturation: "80%",
+                        colorBrightness: "60%",
+                        colorAlpha: 0.65,
+                        colorCycleSpeed: 6,
+                        verticalPosition: "center",
+                        horizontalSpeed: 200,
+                        ribbonCount: 4,
+                        strokeSize: 0,
+                        parallaxAmount: -0.5,
+                        animateSections: true
+                    };
+                    this._onDraw = this._onDraw.bind(this);
+                    this._onResize = this._onResize.bind(this);
+                    this._onScroll = this._onScroll.bind(this);
+                    this.setOptions(options);
+                    this.init();
+                };
+                Factory.prototype = {
+                    constructor: Factory, setOptions: function (options) {
+                        if (typeof options === "object") {
+                            for (var key in options) {
+                                if (options.hasOwnProperty(key)) {
+                                    this._options[key] = options[key];
+                                }
+                            }
+                        }
+                    }, init: function () {
+                        try {
+                            this._canvas = document.createElement("canvas");
+                            this._canvas.style["display"] = "block";
+                            this._canvas.style["position"] = "fixed";
+                            this._canvas.style["margin"] = "0";
+                            this._canvas.style["padding"] = "0";
+                            this._canvas.style["border"] = "0";
+                            this._canvas.style["outline"] = "0";
+                            this._canvas.style["left"] = "0";
+                            this._canvas.style["top"] = "0";
+                            this._canvas.style["width"] = "100%";
+                            this._canvas.style["height"] = "100%";
+                            this._canvas.style["z-index"] = "-1";
+                            this._canvas.style["background-color"] = "#ffffff";
+                            this._canvas.id = "bgCanvas";
+                            this._onResize();
+                            this._context = this._canvas.getContext("2d");
+                            this._context.clearRect(0, 0, this._width, this._height);
+                            this._context.globalAlpha = this._options.colorAlpha;
+                            window.addEventListener("resize", this._onResize);
+                            window.addEventListener("scroll", this._onScroll);
+                            var body_ = document.getElementsByTagName('body')[0];
+                            body_.appendChild(this._canvas);
+                        } catch (e) {
+                            console.warn("Canvas Context Error: " + e.toString());
+                            return;
+                        }
+                        this._onDraw();
+                    }, addRibbon: function () {
+                        var dir = Math.round(random(1, 9)) > 5 ? "right" : "left", stop = 1000, hide = 200, min = 0 - hide,
+                            max = this._width + hide, movex = 0, movey = 0, startx = dir === "right" ? min : max,
+                            starty = Math.round(random(0, this._height));
+                        if (/^(top|min)$/i.test(this._options.verticalPosition)) {
+                            starty = 0 + hide;
+                        } else if (/^(middle|center)$/i.test(this._options.verticalPosition)) {
+                            starty = this._height / 2;
+                        } else if (/^(bottom|max)$/i.test(this._options.verticalPosition)) {
+                            starty = this._height - hide;
+                        }
+                        var ribbon = [], point1 = new Point(startx, starty), point2 = new Point(startx, starty), point3 = null,
+                            color = Math.round(random(0, 360)), delay = 0;
+                        while (true) {
+                            if (stop <= 0) break;
+                            stop--;
+                            movex = Math.round((Math.random() * 1 - 0.2) * this._options.horizontalSpeed);
+                            movey = Math.round((Math.random() * 1 - 0.5) * (this._height * 0.25));
+                            point3 = new Point();
+                            point3.copy(point2);
+                            if (dir === "right") {
+                                point3.add(movex, movey);
+                                if (point2.x >= max) break;
+                            } else if (dir === "left") {
+                                point3.subtract(movex, movey);
+                                if (point2.x <= min) break;
+                            }
+                            ribbon.push({
+                                point1: new Point(point1.x, point1.y),
+                                point2: new Point(point2.x, point2.y),
+                                point3: point3,
+                                color: color,
+                                delay: delay,
+                                dir: dir,
+                                alpha: 0,
+                                phase: 0
+                            });
+                            point1.copy(point2);
+                            point2.copy(point3);
+                            delay += 4;
+                            color += this._options.colorCycleSpeed;
+                        }
+                        this._ribbons.push(ribbon);
+                    }, _drawRibbonSection: function (section) {
+                        if (section) {
+                            if (section.phase >= 1 && section.alpha <= 0) {
+                                return true;
+                            }
+                            if (section.delay <= 0) {
+                                section.phase += 0.02;
+                                section.alpha = Math.sin(section.phase) * 1;
+                                section.alpha = section.alpha <= 0 ? 0 : section.alpha;
+                                section.alpha = section.alpha >= 1 ? 1 : section.alpha;
+                                if (this._options.animateSections) {
+                                    var mod = Math.sin(1 + section.phase * Math.PI / 2) * 0.1;
+                                    if (section.dir === "right") {
+                                        section.point1.add(mod, 0);
+                                        section.point2.add(mod, 0);
+                                        section.point3.add(mod, 0);
+                                    } else {
+                                        section.point1.subtract(mod, 0);
+                                        section.point2.subtract(mod, 0);
+                                        section.point3.subtract(mod, 0);
+                                    }
+                                    section.point1.add(0, mod);
+                                    section.point2.add(0, mod);
+                                    section.point3.add(0, mod);
+                                }
+                            } else {
+                                section.delay -= 0.5;
+                            }
+                            var s = this._options.colorSaturation, l = this._options.colorBrightness,
+                                c = "hsla(" + section.color + ", " + s + ", " + l + ", " + section.alpha + " )";
+                            this._context.save();
+                            if (this._options.parallaxAmount !== 0) {
+                                this._context.translate(0, this._scroll * this._options.parallaxAmount);
+                            }
+                            this._context.beginPath();
+                            this._context.moveTo(section.point1.x, section.point1.y);
+                            this._context.lineTo(section.point2.x, section.point2.y);
+                            this._context.lineTo(section.point3.x, section.point3.y);
+                            this._context.fillStyle = c;
+                            this._context.fill();
+                            if (this._options.strokeSize > 0) {
+                                this._context.lineWidth = this._options.strokeSize;
+                                this._context.strokeStyle = c;
+                                this._context.lineCap = "round";
+                                this._context.stroke();
+                            }
+                            this._context.restore();
+                        }
+                        return false;
+                    }, _onDraw: function () {
+                        for (var i = 0, t = this._ribbons.length; i < t; ++i) {
+                            if (!this._ribbons[i]) {
+                                this._ribbons.splice(i, 1);
+                            }
+                        }
+                        this._context.clearRect(0, 0, this._width, this._height);
+                        for (var a = 0; a < this._ribbons.length; ++a) {
+                            var ribbon = this._ribbons[a], numSections = ribbon.length, numDone = 0;
+                            for (var b = 0; b < numSections; ++b) {
+                                if (this._drawRibbonSection(ribbon[b])) {
+                                    numDone++;
+                                }
+                            }
+                            if (numDone >= numSections) {
+                                this._ribbons[a] = null;
+                            }
+                        }
+                        if (this._ribbons.length < this._options.ribbonCount) {
+                            this.addRibbon();
+                        }
+                        requestAnimationFrame(this._onDraw);
+                    }, _onResize: function (e) {
+                        var screen = screenInfo(e);
+                        this._width = screen.width;
+                        this._height = screen.height;
+                        if (this._canvas) {
+                            this._canvas.width = this._width;
+                            this._canvas.height = this._height;
+                            if (this._context) {
+                                this._context.globalAlpha = this._options.colorAlpha;
+                            }
+                        }
+                    }, _onScroll: function (e) {
+                        var screen = screenInfo(e);
+                        this._scroll = screen.scrolly;
+                    }
+                };
+                return Factory;
+            });
+            new Ribbons();
+        </script>
+
+        <!--网格动态背景-->
+        <script type="text/javascript">
+            !function () {
+                //封装方法，压缩之后减少文件大小
+                function get_attribute(node, attr, default_value) {
+                    return node.getAttribute(attr) || default_value;
+                }
+
+                //封装方法，压缩之后减少文件大小
+                function get_by_tagname(name) {
+                    return document.getElementsByTagName(name);
+                }
+
+                //获取配置参数
+                function get_config_option() {
+                    var scripts = get_by_tagname("script"),
+                        script_len = scripts.length,
+                        script = scripts[script_len - 1]; //当前加载的script
+                    return {
+                        l: script_len, //长度，用于生成id用
+                        z: get_attribute(script, "zIndex", -1), //z-index
+                        o: get_attribute(script, "opacity", 0.8), //opacity
+                        c: get_attribute(script, "color", "255,255,255"), //color
+                        n: get_attribute(script, "count", 350) //count
+                    };
+                }
+
+                //设置canvas的高宽
+                function set_canvas_size() {
+                    canvas_width = the_canvas.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
+                        canvas_height = the_canvas.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+                }
+
+                //绘制过程
+                function draw_canvas() {
+                    context.clearRect(0, 0, canvas_width, canvas_height);
+                    //随机的线条和当前位置联合数组
+                    var e, i, d, x_dist, y_dist, dist; //临时节点
+                    //遍历处理每一个点
+                    random_points.forEach(function (r, idx) {
+                        r.x += r.xa,
+                            r.y += r.ya, //移动
+                            r.xa *= r.x > canvas_width || r.x < 0 ? -1 : 1,
+                            r.ya *= r.y > canvas_height || r.y < 0 ? -1 : 1, //碰到边界，反向反弹
+                            context.fillRect(r.x - 0.5, r.y - 0.5, 1, 1); //绘制一个宽高为1的点
+                        //从下一个点开始
+                        for (i = idx + 1; i < all_array.length; i++) {
+                            e = all_array[i];
+                            // 当前点存在
+                            if (null !== e.x && null !== e.y) {
+                                x_dist = r.x - e.x; //x轴距离 l
+                                y_dist = r.y - e.y; //y轴距离 n
+                                dist = x_dist * x_dist + y_dist * y_dist; //总距离, m
+
+                                dist < e.max && (e === current_point && dist >= e.max / 2 && (r.x -= 0.03 * x_dist, r.y -= 0.03 * y_dist), //靠近的时候加速
+                                    d = (e.max - dist) / e.max,
+                                    context.beginPath(),
+                                    context.lineWidth = d / 2,
+                                    context.strokeStyle = "#000000",
+                                    context.moveTo(r.x, r.y),
+                                    context.lineTo(e.x, e.y),
+                                    context.stroke());
+                            }
+                        }
+                    }), frame_func(draw_canvas);
+                }
+
+                //创建画布，并添加到body中
+                var the_canvas = document.createElement("canvas"), //画布
+                    config = get_config_option(), //配置
+                    canvas_id = "c_n" + config.l, //canvas id
+                    context = the_canvas.getContext("2d"), canvas_width, canvas_height,
+                    frame_func = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (func) {
+                        window.setTimeout(func, 1000 / 40);
+                    }, random = Math.random,
+                    current_point = {
+                        x: null, //当前鼠标x
+                        y: null, //当前鼠标y
+                        max: 20000 // 圈半径的平方
+                    },
+                    all_array;
+                the_canvas.id = canvas_id;
+                the_canvas.style.cssText = "position:fixed;top:0;left:0;z-index:" + config.z + ";opacity:" + config.o;
+                get_by_tagname("body")[0].appendChild(the_canvas);
+
+                //初始化画布大小
+                set_canvas_size();
+                window.onresize = set_canvas_size;
+                //当时鼠标位置存储，离开的时候，释放当前位置信息
+                window.onmousemove = function (e) {
+                    e = e || window.event;
+                    current_point.x = e.clientX;
+                    current_point.y = e.clientY;
+                }, window.onmouseout = function () {
+                    current_point.x = null;
+                    current_point.y = null;
+                };
+                //随机生成config.n条线位置信息
+                for (var random_points = [], i = 0; config.n > i; i++) {
+                    var x = random() * canvas_width, //随机位置
+                        y = random() * canvas_height,
+                        xa = 2 * random() - 1, //随机运动方向
+                        ya = 2 * random() - 1;
+                    // 随机点
+                    random_points.push({
+                        x: x,
+                        y: y,
+                        xa: xa,
+                        ya: ya,
+                        max: 6000 //沾附距离
+                    });
+                }
+                all_array = random_points.concat([current_point]);
+                //0.1秒后绘制
+                setTimeout(function () {
+                    draw_canvas();
+                }, 100);
+            }();
+
+            // 加载动画控制
+            function showLoader() {
+                const loader = document.getElementById('loader');
+                loader.style.display = 'flex';
+                loader.style.opacity = '1';
+            }
+
+            function fadeOutLoader() {
+                const loader = document.getElementById('loader');
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                }, 100);
+            }
+
+            // 页面加载完成后隐藏加载动画
+            window.addEventListener('load', function () {
+                setTimeout(fadeOutLoader, 100); // 延迟500毫秒隐藏以确保所有内容加载完成
+            });
+
+            window.myloader = { show: showLoader, hide: fadeOutLoader };
+        </script>
+
+        <script>
+            // 添加滚动监听
+            window.addEventListener('scroll', function () {
+                const docContent = document.getElementById('doc-content');
+                if (docContent) {
+                    const docHeight = docContent.scrollHeight - docContent.clientHeight;
+                    const scrolled = (docContent.scrollTop / docHeight) * 100;
+                    document.querySelector('.progress-bar').style.width = scrolled + '%';
                 }
             });
 
-            // 实际使用时，可以替换为真实的GitHub API调用
-            /*
-            async function searchGitHubFiles(query) {
-                showModal();
-                loadingElement.style.display = 'block';
-                errorElement.textContent = '';
-                resultsContainer.innerHTML = '';
-                
-                try {
-                    const response = await fetch(`https://api.github.com/search/code?q=${encodeURIComponent(query)}+repo:zhangyimin12345/zhangyimin12345.github.io`);
-                    const data = await response.json();
-                    
-                    if (data.items && data.items.length > 0) {
-                        data.items.forEach(item => {
-                            const resultItem = document.createElement('div');
-                            resultItem.className = 'result-item';
-                            const rawUrl = `https://raw.githubusercontent.com/zhangyimin12345/zhangyimin12345.github.io/main/${item.path}`;
-                            resultItem.textContent = item.path;
-                            resultItem.addEventListener('click', () => {
-                                hideModal();
-                                loadAndRenderDoc(rawUrl, item.name);
-                            });
-                            resultsContainer.appendChild(resultItem);
-                        });
-                    } else {
-                        resultsContainer.innerHTML = '<div class="result-item">没有找到匹配的文件</div>';
-                    }
-                    
-                    loadingElement.style.display = 'none';
-                } catch (error) {
-                    loadingElement.style.display = 'none';
-                    errorElement.textContent = '搜索时出错: ' + error.message;
+            // 添加文档内容区域的滚动事件
+            document.getElementById('doc-content').addEventListener('scroll', function () {
+                const docHeight = this.scrollHeight - this.clientHeight;
+                const scrolled = (this.scrollTop / docHeight) * 100;
+                document.querySelector('.progress-bar').style.width = scrolled + '%';
+            });
+        </script>
+
+        <script>
+            // 添加收藏逻辑
+            document.querySelectorAll('.favorite-btn').forEach(btn => {
+                // 初始化检查收藏状态
+                const articleId = btn.getAttribute('data-article-id');
+                if (localStorage.getItem(`article_${articleId}_favorited`) === 'true') {
+                    btn.classList.add('active');
                 }
-            }
-            */
-        });
-    </script>
 
-    <!-- 背景效果脚本保持不变 -->
-    <script async="" type="text/javascript">
-        (function (name, factory) {
-            if (typeof window === "object") {
-                window[name] = factory();
-            }
-        })("Ribbons", function () {
-            var _w = window, _b = document.body, _d = document.documentElement;
-            var random = function () {
-                if (arguments.length === 1) {
-                    if (Array.isArray(arguments[0])) {
-                        var index = Math.round(random(0, arguments[0].length - 1));
-                        return arguments[0][index];
-                    }
-                    return random(0, arguments[0]);
-                } else if (arguments.length === 2) {
-                    return Math.random() * (arguments[1] - arguments[0]) + arguments[0];
-                }
-                return 0;
-            };
-            var screenInfo = function (e) {
-                var width = Math.max(0, _w.innerWidth || _d.clientWidth || _b.clientWidth || 0),
-                    height = Math.max(0, _w.innerHeight || _d.clientHeight || _b.clientHeight || 0),
-                    scrollx = Math.max(0, _w.pageXOffset || _d.scrollLeft || _b.scrollLeft || 0) - (_d.clientLeft || 0),
-                    scrolly = Math.max(0, _w.pageYOffset || _d.scrollTop || _b.scrollTop || 0) - (_d.clientTop || 0);
-                return {
-                    width: width,
-                    height: height,
-                    ratio: width / height,
-                    centerx: width / 2,
-                    centery: height / 2,
-                    scrollx: scrollx,
-                    scrolly: scrolly
-                };
-            };
-            var mouseInfo = function (e) {
-                var screen = screenInfo(e), mousex = e ? Math.max(0, e.pageX || e.clientX || 0) : 0,
-                    mousey = e ? Math.max(0, e.pageY || e.clientY || 0) : 0;
-                return {
-                    mousex: mousex,
-                    mousey: mousey,
-                    centerx: mousex - screen.width / 2,
-                    centery: mousey - screen.height / 2
-                };
-            };
-            var Point = function (x, y) {
-                this.x = 0;
-                this.y = 0;
-                this.set(x, y);
-            };
-            Point.prototype = {
-                constructor: Point, set: function (x, y) {
-                    this.x = x || 0;
-                    this.y = y || 0;
-                }, copy: function (point) {
-                    this.x = point.x || 0;
-                    this.y = point.y || 0;
-                    return this;
-                }, multiply: function (x, y) {
-                    this.x *= x || 1;
-                    this.y *= y || 1;
-                    return this;
-                }, divide: function (x, y) {
-                    this.x /= x || 1;
-                    this.y /= y || 1;
-                    return this;
-                }, add: function (x, y) {
-                    this.x += x || 0;
-                    this.y += y || 0;
-                    return this;
-                }, subtract: function (x, y) {
-                    this.x -= x || 0;
-                    this.y -= y || 0;
-                    return this;
-                }, clampX: function (min, max) {
-                    this.x = Math.max(min, Math.min(this.x, max));
-                    return this;
-                }, clampY: function (min, max) {
-                    this.y = Math.max(min, Math.min(this.y, max));
-                    return this;
-                }, flipX: function () {
-                    this.x *= -1;
-                    return this;
-                }, flipY: function () {
-                    this.y *= -1;
-                    return this;
-                }
-            };
-            var Factory = function (options) {
-                this._canvas = null;
-                this._context = null;
-                this._sto = null;
-                this._width = 0;
-                this._height = 0;
-                this._scroll = 0;
-                this._ribbons = [];
-                this._options = {
-                    colorSaturation: "80%",
-                    colorBrightness: "60%",
-                    colorAlpha: 0.65,
-                    colorCycleSpeed: 6,
-                    verticalPosition: "center",
-                    horizontalSpeed: 200,
-                    ribbonCount: 4,
-                    strokeSize: 0,
-                    parallaxAmount: -0.5,
-                    animateSections: true
-                };
-                this._onDraw = this._onDraw.bind(this);
-                this._onResize = this._onResize.bind(this);
-                this._onScroll = this._onScroll.bind(this);
-                this.setOptions(options);
-                this.init();
-            };
-            Factory.prototype = {
-                constructor: Factory, setOptions: function (options) {
-                    if (typeof options === "object") {
-                        for (var key in options) {
-                            if (options.hasOwnProperty(key)) {
-                                this._options[key] = options[key];
-                            }
-                        }
-                    }
-                }, init: function () {
-                    try {
-                        this._canvas = document.createElement("canvas");
-                        this._canvas.style["display"] = "block";
-                        this._canvas.style["position"] = "fixed";
-                        this._canvas.style["margin"] = "0";
-                        this._canvas.style["padding"] = "0";
-                        this._canvas.style["border"] = "0";
-                        this._canvas.style["outline"] = "0";
-                        this._canvas.style["left"] = "0";
-                        this._canvas.style["top"] = "0";
-                        this._canvas.style["width"] = "100%";
-                        this._canvas.style["height"] = "100%";
-                        this._canvas.style["z-index"] = "-1";
-                        this._canvas.style["background-color"] = "#ffffff";
-                        this._canvas.id = "bgCanvas";
-                        this._onResize();
-                        this._context = this._canvas.getContext("2d");
-                        this._context.clearRect(0, 0, this._width, this._height);
-                        this._context.globalAlpha = this._options.colorAlpha;
-                        window.addEventListener("resize", this._onResize);
-                        window.addEventListener("scroll", this._onScroll);
-                        var body_ = document.getElementsByTagName('body')[0];
-                        body_.appendChild(this._canvas);
-                    } catch (e) {
-                        console.warn("Canvas Context Error: " + e.toString());
-                        return;
-                    }
-                    this._onDraw();
-                }, addRibbon: function () {
-                    var dir = Math.round(random(1, 9)) > 5 ? "right" : "left", stop = 1000, hide = 200, min = 0 - hide,
-                        max = this._width + hide, movex = 0, movey = 0, startx = dir === "right" ? min : max,
-                        starty = Math.round(random(0, this._height));
-                    if (/^(top|min)$/i.test(this._options.verticalPosition)) {
-                        starty = 0 + hide;
-                    } else if (/^(middle|center)$/i.test(this._options.verticalPosition)) {
-                        starty = this._height / 2;
-                    } else if (/^(bottom|max)$/i.test(this._options.verticalPosition)) {
-                        starty = this._height - hide;
-                    }
-                    var ribbon = [], point1 = new Point(startx, starty), point2 = new Point(startx, starty), point3 = null,
-                        color = Math.round(random(0, 360)), delay = 0;
-                    while (true) {
-                        if (stop <= 0) break;
-                        stop--;
-                        movex = Math.round((Math.random() * 1 - 0.2) * this._options.horizontalSpeed);
-                        movey = Math.round((Math.random() * 1 - 0.5) * (this._height * 0.25));
-                        point3 = new Point();
-                        point3.copy(point2);
-                        if (dir === "right") {
-                            point3.add(movex, movey);
-                            if (point2.x >= max) break;
-                        } else if (dir === "left") {
-                            point3.subtract(movex, movey);
-                            if (point2.x <= min) break;
-                        }
-                        ribbon.push({
-                            point1: new Point(point1.x, point1.y),
-                            point2: new Point(point2.x, point2.y),
-                            point3: point3,
-                            color: color,
-                            delay: delay,
-                            dir: dir,
-                            alpha: 0,
-                            phase: 0
-                        });
-                        point1.copy(point2);
-                        point2.copy(point3);
-                        delay += 4;
-                        color += this._options.colorCycleSpeed;
-                    }
-                    this._ribbons.push(ribbon);
-                }, _drawRibbonSection: function (section) {
-                    if (section) {
-                        if (section.phase >= 1 && section.alpha <= 0) {
-                            return true;
-                        }
-                        if (section.delay <= 0) {
-                            section.phase += 0.02;
-                            section.alpha = Math.sin(section.phase) * 1;
-                            section.alpha = section.alpha <= 0 ? 0 : section.alpha;
-                            section.alpha = section.alpha >= 1 ? 1 : section.alpha;
-                            if (this._options.animateSections) {
-                                var mod = Math.sin(1 + section.phase * Math.PI / 2) * 0.1;
-                                if (section.dir === "right") {
-                                    section.point1.add(mod, 0);
-                                    section.point2.add(mod, 0);
-                                    section.point3.add(mod, 0);
-                                } else {
-                                    section.point1.subtract(mod, 0);
-                                    section.point2.subtract(mod, 0);
-                                    section.point3.subtract(mod, 0);
-                                }
-                                section.point1.add(0, mod);
-                                section.point2.add(0, mod);
-                                section.point3.add(0, mod);
-                            }
-                        } else {
-                            section.delay -= 0.5;
-                        }
-                        var s = this._options.colorSaturation, l = this._options.colorBrightness,
-                            c = "hsla(" + section.color + ", " + s + ", " + l + ", " + section.alpha + " )";
-                        this._context.save();
-                        if (this._options.parallaxAmount !== 0) {
-                            this._context.translate(0, this._scroll * this._options.parallaxAmount);
-                        }
-                        this._context.beginPath();
-                        this._context.moveTo(section.point1.x, section.point1.y);
-                        this._context.lineTo(section.point2.x, section.point2.y);
-                        this._context.lineTo(section.point3.x, section.point3.y);
-                        this._context.fillStyle = c;
-                        this._context.fill();
-                        if (this._options.strokeSize > 0) {
-                            this._context.lineWidth = this._options.strokeSize;
-                            this._context.strokeStyle = c;
-                            this._context.lineCap = "round";
-                            this._context.stroke();
-                        }
-                        this._context.restore();
-                    }
-                    return false;
-                }, _onDraw: function () {
-                    for (var i = 0, t = this._ribbons.length; i < t; ++i) {
-                        if (!this._ribbons[i]) {
-                            this._ribbons.splice(i, 1);
-                        }
-                    }
-                    this._context.clearRect(0, 0, this._width, this._height);
-                    for (var a = 0; a < this._ribbons.length; ++a) {
-                        var ribbon = this._ribbons[a], numSections = ribbon.length, numDone = 0;
-                        for (var b = 0; b < numSections; ++b) {
-                            if (this._drawRibbonSection(ribbon[b])) {
-                                numDone++;
-                            }
-                        }
-                        if (numDone >= numSections) {
-                            this._ribbons[a] = null;
-                        }
-                    }
-                    if (this._ribbons.length < this._options.ribbonCount) {
-                        this.addRibbon();
-                    }
-                    requestAnimationFrame(this._onDraw);
-                }, _onResize: function (e) {
-                    var screen = screenInfo(e);
-                    this._width = screen.width;
-                    this._height = screen.height;
-                    if (this._canvas) {
-                        this._canvas.width = this._width;
-                        this._canvas.height = this._height;
-                        if (this._context) {
-                            this._context.globalAlpha = this._options.colorAlpha;
-                        }
-                    }
-                }, _onScroll: function (e) {
-                    var screen = screenInfo(e);
-                    this._scroll = screen.scrolly;
-                }
-            };
-            return Factory;
-        });
-        new Ribbons();
-    </script>
-    <!--网格动态背景开始-->
-    <script type="text/javascript">
-        !function () {
-            //封装方法，压缩之后减少文件大小
-            function get_attribute(node, attr, default_value) {
-                return node.getAttribute(attr) || default_value;
-            }
-
-            //封装方法，压缩之后减少文件大小
-            function get_by_tagname(name) {
-                return document.getElementsByTagName(name);
-            }
-
-            //获取配置参数
-            function get_config_option() {
-                var scripts = get_by_tagname("script"),
-                    script_len = scripts.length,
-                    script = scripts[script_len - 1]; //当前加载的script
-                return {
-                    l: script_len, //长度，用于生成id用
-                    z: get_attribute(script, "zIndex", -1), //z-index
-                    o: get_attribute(script, "opacity", 0.8), //opacity
-                    c: get_attribute(script, "color", "255,255,255"), //color
-                    n: get_attribute(script, "count", 350) //count
-                };
-            }
-
-            //设置canvas的高宽
-            function set_canvas_size() {
-                canvas_width = the_canvas.width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth,
-                    canvas_height = the_canvas.height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-            }
-
-            //绘制过程
-            function draw_canvas() {
-                context.clearRect(0, 0, canvas_width, canvas_height);
-                //随机的线条和当前位置联合数组
-                var e, i, d, x_dist, y_dist, dist; //临时节点
-                //遍历处理每一个点
-                random_points.forEach(function (r, idx) {
-                    r.x += r.xa,
-                        r.y += r.ya, //移动
-                        r.xa *= r.x > canvas_width || r.x < 0 ? -1 : 1,
-                        r.ya *= r.y > canvas_height || r.y < 0 ? -1 : 1, //碰到边界，反向反弹
-                        context.fillRect(r.x - 0.5, r.y - 0.5, 1, 1); //绘制一个宽高为1的点
-                    //从下一个点开始
-                    for (i = idx + 1; i < all_array.length; i++) {
-                        e = all_array[i];
-                        // 当前点存在
-                        if (null !== e.x && null !== e.y) {
-                            x_dist = r.x - e.x; //x轴距离 l
-                            y_dist = r.y - e.y; //y轴距离 n
-                            dist = x_dist * x_dist + y_dist * y_dist; //总距离, m
-
-                            dist < e.max && (e === current_point && dist >= e.max / 2 && (r.x -= 0.03 * x_dist, r.y -= 0.03 * y_dist), //靠近的时候加速
-                                d = (e.max - dist) / e.max,
-                                context.beginPath(),
-                                context.lineWidth = d / 2,
-                                context.strokeStyle = "#000000",
-                                context.moveTo(r.x, r.y),
-                                context.lineTo(e.x, e.y),
-                                context.stroke());
-                        }
-                    }
-                }), frame_func(draw_canvas);
-            }
-
-            //创建画布，并添加到body中
-            var the_canvas = document.createElement("canvas"), //画布
-                config = get_config_option(), //配置
-                canvas_id = "c_n" + config.l, //canvas id
-                context = the_canvas.getContext("2d"), canvas_width, canvas_height,
-                frame_func = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function (func) {
-                    window.setTimeout(func, 1000 / 40);
-                }, random = Math.random,
-                current_point = {
-                    x: null, //当前鼠标x
-                    y: null, //当前鼠标y
-                    max: 20000 // 圈半径的平方
-                },
-                all_array;
-            the_canvas.id = canvas_id;
-            the_canvas.style.cssText = "position:fixed;top:0;left:0;z-index:" + config.z + ";opacity:" + config.o;
-            get_by_tagname("body")[0].appendChild(the_canvas);
-
-            //初始化画布大小
-            set_canvas_size();
-            window.onresize = set_canvas_size;
-            //当时鼠标位置存储，离开的时候，释放当前位置信息
-            window.onmousemove = function (e) {
-                e = e || window.event;
-                current_point.x = e.clientX;
-                current_point.y = e.clientY;
-            }, window.onmouseout = function () {
-                current_point.x = null;
-                current_point.y = null;
-            };
-            //随机生成config.n条线位置信息
-            for (var random_points = [], i = 0; config.n > i; i++) {
-                var x = random() * canvas_width, //随机位置
-                    y = random() * canvas_height,
-                    xa = 2 * random() - 1, //随机运动方向
-                    ya = 2 * random() - 1;
-                // 随机点
-                random_points.push({
-                    x: x,
-                    y: y,
-                    xa: xa,
-                    ya: ya,
-                    max: 6000 //沾附距离
+                // 点击切换收藏状态
+                btn.addEventListener('click', function () {
+                    this.classList.toggle('active');
+                    localStorage.setItem(`article_${articleId}_favorited`, this.classList.contains('active'));
                 });
-            }
-            all_array = random_points.concat([current_point]);
-            //0.1秒后绘制
-            setTimeout(function () {
-                draw_canvas();
-            }, 100);
-        }();
-    </script>
-</body>
+            });
+        </script>
+
+    </body>
 
 </html>
