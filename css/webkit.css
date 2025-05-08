@@ -1,0 +1,36 @@
+::-webkit-scrollbar {
+  width: 10px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #a6a6a6;
+  border-radius: 1rem;
+  min-height: 60px;
+
+  &:hover {
+    background-color: #757575;
+  }
+
+  &:active {
+    background-color: #424242;
+  }
+}
+
+::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+[data-user-color-scheme='dark'] {
+  ::-webkit-scrollbar-thumb {
+    background-color: #687582;
+
+    &:hover {
+      background-color: #9da8b3;
+    }
+
+    &:active {
+      background-color: #c5d0db;
+    }
+  }
+}
