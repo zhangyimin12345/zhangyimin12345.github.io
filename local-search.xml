@@ -4,6 +4,35 @@
   
   
   <entry>
+    <title>Hexo+Fluid博客搭建</title>
+    <link href="/2025/05/08/Hexo+Fluid%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"/>
+    <url>/2025/05/08/Hexo+Fluid%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/</url>
+    
+    <content type="html"><![CDATA[<h2 id="一-准备工作">一、准备工作</h2><ol><li><p>首先准备一个 <a href="https://github.com">Github</a> 账号（<code>用户名.github.io</code>留空），没有就去注册一个新账号。</p></li><li><p>安装 Git，链接: <a href="https://git-scm.com/downloads">https://git-scm.com/downloads</a>。</p></li><li><p>安装 Node.js ，官网链接： <a href="https://nodejs.org/zh-cn/download">Node.js — Download Node.js</a></p></li></ol><p>安装这两个，一般都会自动配置环境，配置这个目的是可以在任何路径下使用 Git 和 Node.js，如果没有配置环境变量，可以去配置一下。</p><p>接下来，测试安装是否成功。</p><p>打开终端（<code>Win</code> + <code>R</code>，输入 <code>cmd</code> ，再回车），输入 <code>node -v</code> 如果返回了 <code>x.x.x</code>，说明安装成功。再输入 <code>npm -v</code> 如果返回了 <code>x.x.x</code>，说明安装成功。</p><p>这里会有一个 <code>npm</code> 没有 <code>Node.js</code> 却有的解决方案，还没写。</p><p>接着，打开 <code>Git Bash</code>，配置 <code>Git</code> 用户信息。先输入：</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git config --global user.name <span class="hljs-string">&quot;&lt;YourName&gt;&quot;</span><br></code></pre></td></tr></table></figure><p>其中 <code>&lt;YourName&gt;</code> 就是你的 <code>Github</code> 用户名。再输入：</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">git config --global user.name <span class="hljs-string">&quot;&lt;YourEmail&gt;&quot;</span><br></code></pre></td></tr></table></figure><p>其中 <code>&lt;YourEmail&gt;</code> 就是你的 <code>Github</code> 绑定的邮箱。</p><p class="note note-warning">注意：带引号！</p><h2 id="二-开始">二、开始！</h2><p class="note note-warning">注：全局使用 `Git Bash`。<ol><li><h3 id="全局安装-hexo">全局安装 Hexo</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">npm i -g hexo-cli<br></code></pre></td></tr></table></figure><p>需要一点时间，莫急。</p></li><li><h3 id="创建博客项目">创建博客项目</h3><p>先创建一个文件夹（或直接用磁盘），右键文件夹，找 <code>Open Git Bash Here</code> ，没有请检查 <code>显示更多选项</code> 或安装情况。</p><p>再输入：</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs sh">hexo init myblog<br><span class="hljs-built_in">cd</span> myblog<br>npm install<br></code></pre></td></tr></table></figure><ol><li>创建文件夹并初始化，名字自拟，推荐用这个名字，后面有问题方便查错</li><li>索引至文件夹</li><li>安装依赖</li></ol></li><li><h3 id="本地预览">本地预览</h3><p>输入：</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">hexo s<br></code></pre></td></tr></table></figure><p>如果无法访问，尝试切换端口。</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">hexo s -p 5000<br></code></pre></td></tr></table></figure><p>其中的 <code>5000</code> 可以切换，默认 <code>4000</code>。</p><p>此时就可以看到 <code>Hexo</code> 自带主题了。</p></li><li><h3 id="部署">部署</h3><ol><li><h4 id="修改文件">修改文件</h4></li></ol><p>修改 <code>~/myblog/_config.yml</code>，在底部放上如下代码：</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><br><span class="hljs-attr">deploy:</span><br>   <span class="hljs-attr">type:</span> <span class="hljs-string">git</span><br>   <span class="hljs-attr">repo:</span> <span class="hljs-string">git@github.com:&lt;YourName&gt;/&lt;YourName&gt;.github.io.git</span><br>   <span class="hljs-attr">branch:</span> <span class="hljs-string">main</span><br></code></pre></td></tr></table></figure><p class="note note-warning">注意：注意空行与缩进，还有冒号与内容间的空格。</p><ol start="2"><li><h4 id="安装部署插件"><strong>安装部署插件</strong></h4><p>在 <code>Git Bash</code> 里输入：</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">npm i hexo-deployer-git --save<br></code></pre></td></tr></table></figure><p>需要一点时间，莫急。</p></li><li><h4 id="部署">部署</h4><ol><li><h5 id="创建仓库">创建仓库</h5><p>在 <code>Github</code> 上创建一个名为 <code>&lt;YourName&gt;.github.io</code> 的仓库。</p></li><li><h5 id="部署">部署</h5><p>在 <code>Git Bash</code> 里输入：</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs sh">hexo clean &amp;&amp; hexo g -d<br></code></pre></td></tr></table></figure><p>需要一点时间，莫急。</p><p>这时有些人就会出现一些问题了，但我还没开始写。</p></li></ol></li></ol></li></ol>]]></content>
+    
+    
+    <categories>
+      
+      <category>Fluid</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>Hexo</tag>
+      
+      <tag>Fluid</tag>
+      
+      <tag>博客相关</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>C++进制转换相关</title>
     <link href="/2025/05/06/C++%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2%E7%9B%B8%E5%85%B3/"/>
     <url>/2025/05/06/C++%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2%E7%9B%B8%E5%85%B3/</url>

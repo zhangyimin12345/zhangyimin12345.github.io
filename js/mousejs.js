@@ -1,0 +1,1 @@
+$.shuicheMouse({ type: 11, color: false })

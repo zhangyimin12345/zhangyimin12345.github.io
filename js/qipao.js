@@ -1,6 +1,6 @@
 // 上升的气泡bynote.cn
 function qipao() {
-    $('#background').circleMagic({
+    $('#header').circleMagic({
         radius: 10,
         density: 0.2,
         color: 'rgba(255,255,255,0.4)',
@@ -66,6 +66,10 @@ function qipao() {
         }
 
         !function () {
+            if (!l) {
+                console.error('Element #header not found');
+                return;
+            }
             o = l.offsetWidth;
             a = l.offsetHeight;
             (function () {
@@ -91,6 +95,4 @@ function qipao() {
     };
 }(jQuery);
 
-$(document).ready(function () {
-    qipao();
-});
+document.addEventListener('DOMContentLoaded', qipao);

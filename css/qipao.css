@@ -1,0 +1,8 @@
+#background {
+  display: block;
+  /* 必须是非 none 值 */
+  width: 100%;
+  /* 需要明确尺寸 */
+  height: 100vh;
+  /* 示例：视口高度 */
+}
