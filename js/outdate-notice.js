@@ -14,13 +14,12 @@ window.onload = function () {
   let interval = parseInt(now - pubTime)
   let days = parseInt(interval / 86400000)
   /* 发布时间超过指定时间（毫秒） */
-  //note warning 以及 note danger 是 Next 主题的自定义模板语法，如果使用其他主题，请自行更改样式以达到最佳显示效果
   if (interval > warningDay * 3600 * 24 * 1000 && interval < errorDay * 3600 * 24 * 1000) {
-    posts[0].innerHTML = '<div class="note note-warning">' +
+    posts[0].innerHTML = '<div class="fold warning">' +
       '<h5>提示</h5><p>这是一篇发布于 ' + days + ' 天前的文章，部分信息可能已发生改变，请注意甄别。</p>' +
       '</div>' + posts[0].innerHTML;
   } else if (interval >= errorDay * 3600 * 24 * 1000) {
-    posts[0].innerHTML = '<div class="note note-danger">' +
+    posts[0].innerHTML = '<div class="fold danger">' +
       '<h5>提示</h5><p>这是一篇发布于 ' + days + ' 天前的文章，部分信息可能已发生改变，请注意甄别。</p>' +
       '</div>' + posts[0].innerHTML;
   }
