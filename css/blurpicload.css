@@ -1,0 +1,17 @@
+.post-content img, 
+.container img {
+    filter: blur(5px);
+    opacity: 0;
+    transition: filter 1s ease,opacity 1s ease;
+}
+
+.post-content img.loaded, 
+.container img.loaded {
+    filter: blur(0);
+    opacity: 1;
+}
+
+#comments img {
+    filter: none;
+    opacity: 1;
+}
