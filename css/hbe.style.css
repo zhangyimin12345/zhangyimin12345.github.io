@@ -84,45 +84,53 @@
 .hbe-button {
   width: 130px;
   height: 40px;
-  background: linear-gradient(to bottom, #4eb5e5 0%,#389ed5 100%); /* W3C */
-  border: none;
-  border-radius: 5px;
-  position: relative;
-  border-bottom: 4px solid #2b8bc6;
-  color: #fbfbfb;
+  background-color: #ffffff; /* 白色背景 */
+  border: 2px solid #ccc;     /* 灰色边框 */
+  color: #333;                 /* 深灰色文字 */
   font-weight: 600;
-  font-family: 'Open Sans', sans-serif;
-  text-shadow: 1px 1px 1px rgba(0,0,0,.4);
+  font-family: 'Open Sans', sans-serif, 'Microsoft Yahei';
   font-size: 15px;
-  text-align: left;
-  text-indent: 5px;
-  box-shadow: 0px 3px 0px 0px rgba(0,0,0,.2);
+  text-align: center;
+  border-radius: 5px;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
   cursor: pointer;
-
   display: block;
-  margin: 0 auto;
-  margin-bottom: 20px;
+  margin: 20px auto;
+  transition: all 0.2s ease-in-out;
+  position: relative;
+}
+
+.hbe-button:hover {
+  background-color: #f9f9f9;
+  border-color: #aaa;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.15);
 }
 
 .hbe-button:active {
-  box-shadow: 0px 2px 0px 0px rgba(0,0,0,.2);
-  top: 1px;
+  transform: translateY(2px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.hbe-button:after {
-  content: "";
-  width: 0;
-  height: 0;
-  display: block;
-  border-top: 20px solid #187dbc;
-  border-bottom: 20px solid #187dbc;
-  border-left: 16px solid transparent;
-  border-right: 20px solid #187dbc;
-  position: absolute;
-  opacity: 0.6;
-  right: 0;
-  top: 0;
-  border-radius: 0 5px 5px 0;
+@media (prefers-color-scheme: dark) {
+  .hbe-button {
+    background-color: #2d2d2d; /* 深灰背景 */
+    border-color: #555;
+    color: #eee;               /* 浅色文字 */
+    box-shadow: 0 3px 5px rgba(255, 255, 255, 0.05);
+  }
+
+  .hbe-button:hover {
+    background-color: #3a3a3a;
+    border-color: #666;
+    box-shadow: 0 5px 10px rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+  }
+
+  .hbe-button:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.05);
+  }
 }
 /* hbe button in post page */
 
