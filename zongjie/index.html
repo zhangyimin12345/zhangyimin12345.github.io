@@ -27,7 +27,7 @@
 <meta property="og:description" content="zhangyimin12345 的总结\text{\huge \color{orange}zhangyimin12345 \color{black}{的总结}} zhangyimin12345 的总结 B - Stamp 考虑动规。设 dp i,jdp\ _{i,j}dp i,j​ 为 SSS 前 iii 位和 TTT 前 jjj 位能否匹配。   如果 si&#x3D;tjs_i&#x3D;t_jsi​&#x3D;tj​，就">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-05-12T12:00:00.000Z">
-<meta property="article:modified_time" content="2025-05-12T12:29:50.000Z">
+<meta property="article:modified_time" content="2025-05-13T10:06:34.000Z">
 <meta property="article:author" content="zhangyimin12345">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -290,7 +290,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          230 字
+          510 字
         
       </span>
     
@@ -301,7 +301,7 @@
         
         
         
-          2 分钟
+          5 分钟
         
       </span>
     
@@ -352,7 +352,7 @@
               <p id="updated-time" class="note note-info" style="display: none">
                 
                   
-                    本文最后更新于 2025-05-12T20:29:50+08:00
+                    本文最后更新于 2025-05-13T18:06:34+08:00
                   
                   
 
@@ -387,6 +387,23 @@
       <div class="fold-collapse collapse" id="collapse-65ad56e5">
         <div class="fold-content">
           <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta"># <span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">int</span> n , m , dp[<span class="hljs-number">200010</span>][<span class="hljs-number">5</span>];<br>string s , t;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	cin &gt;&gt; n &gt;&gt; m &gt;&gt; s &gt;&gt; t;<br>	s = <span class="hljs-string">&quot; &quot;</span> + s;<br>	t = <span class="hljs-string">&quot; &quot;</span> + t;<br>	dp[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span> ; i &lt;= n ; i ++)<br>	&#123;<br>		<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">1</span> ; j &lt;= m ; j ++)<br>		&#123;<br>			<span class="hljs-keyword">if</span>(s[i] == t[j])<br>			&#123;<br>				dp[i][j] |= dp[i - <span class="hljs-number">1</span>][j - <span class="hljs-number">1</span>] | dp[i - <span class="hljs-number">1</span>][m];<br>			&#125;<br>		&#125; <br>		<span class="hljs-keyword">if</span>(s[i] == t[<span class="hljs-number">1</span>])<br>		&#123;<br>			<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j = <span class="hljs-number">1</span> ; j &lt;= m ; j ++)<br>			&#123;<br>				dp[i][<span class="hljs-number">1</span>] |= dp[i - <span class="hljs-number">1</span>][j];<br>			&#125; <br>		&#125;<br>	&#125;<br>	cout &lt;&lt; (dp[n][m] ? <span class="hljs-string">&quot;Yes&quot;</span> : <span class="hljs-string">&quot;No&quot;</span>);<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+        </div>
+      </div>
+    </div>
+<h2 id="c-colored-ball">C - Colored Ball</h2>
+<p><s>洛谷<strong>太</strong>尊重AT评分了</s></p>
+<p>讲完之后就觉得很简单了。</p>
+<p>先打暴力，用 <code>map</code> 或 <code>set</code> 存放小球，暴力枚举，<s>但我居然没这么搞</s>。</p>
+<p>然后就会有个想法：小球数量少的盒子放到数量多的盒子里，速度自然比数量多的盒子放到数量少的盒子的速度要快，那我们能不能在小球数量多的盒子放到数量少的盒子时换种方法，将小球数量少的盒子放到数量多的盒子，再交换一下呢？尝试一下，貌似可以，时间复杂度应该也够（<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>4</mn></mrow><annotation encoding="application/x-tex">4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span></span></span></span> 秒），提交！<span style="background: rgb(82, 196, 26); color: rgb(255, 255, 255);border-radius: 4px;"><br>
+Accepted </span> ！</p>
+
+    <div class="fold">
+      <div class="fold-title fold-success collapsed" data-toggle="collapse" href="#collapse-28ab9646" role="button" aria-expanded="false" aria-controls="collapse-28ab9646">
+        <div class="fold-arrow">▶</div>代码
+      </div>
+      <div class="fold-collapse collapse" id="collapse-28ab9646">
+        <div class="fold-content">
+          <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta"># <span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">int</span> n , q , x , y;<br>map &lt;<span class="hljs-type">int</span> , <span class="hljs-type">int</span>&gt; mp[<span class="hljs-number">200010</span>];<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	cin &gt;&gt; n &gt;&gt; q;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">1</span> ; i &lt;= n ; i ++)<br>	&#123;<br>		cin &gt;&gt; x;<br>		mp[i][x] ++;<br>	&#125;<br>	<span class="hljs-keyword">while</span>(q --)<br>	&#123;<br>		cin &gt;&gt; x &gt;&gt; y;<br>		<span class="hljs-keyword">if</span>(mp[x].<span class="hljs-built_in">size</span>() &gt; mp[y].<span class="hljs-built_in">size</span>())<br>		&#123;<br>			<span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> i : mp[y])<br>			&#123;<br>				mp[x][i.first] ++;<br>			&#125;<br>			mp[y].<span class="hljs-built_in">clear</span>();<br>			<span class="hljs-built_in">swap</span>(mp[x] , mp[y]);<br>		&#125;<br>		<span class="hljs-keyword">else</span><br>		&#123;<br>			<span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> i : mp[x])<br>			&#123;<br>				mp[y][i.first] ++;<br>			&#125;<br>			mp[x].<span class="hljs-built_in">clear</span>();<br>		&#125;<br>		cout &lt;&lt; mp[y].<span class="hljs-built_in">size</span>() &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;<br>	&#125;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
         </div>
       </div>
     </div>
@@ -425,7 +442,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2025年5月12日</div>
+          <div>2025年5月13日</div>
         </div>
       
       
