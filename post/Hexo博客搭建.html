@@ -1,0 +1,78 @@
+<!doctype html><html lang="en"><head><!-- hexo injector head_begin start --><meta name="description" content="在学 C++ 的蒟蒻。"></meta><meta name="author" content="zhangyimin12345"></meta><!-- hexo injector head_begin end --><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="/favicon.ico"><script type="module" crossorigin src="/static/js/120aa8f8.js"></script><link rel="stylesheet" href="/static/css/a14e1a22.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css" integrity="sha512-fHwaWebuwA7NSF5Qg/af4UeDx9XqUpYpOGgubo3yWu+b2IQR4UeQwbb42Ti7gVAjNtVoI/I9TEoYeu9omwcC6g==" crossorigin="anonymous" referrerpolicy="no-referrer" /><script rel="prefetch" async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><script rel="preload" src="https://unpkg.com/blueimp-md5@^2.19.0/js/md5.min.js"></script><script rel="preload" src="https://unpkg.com/lodash@^4.17.21/lodash.min.js"></script><link rel="stylesheet" href="https://fonts.loli.net/css?family=Rubik" /><script rel="preload" src="https://unpkg.com/gitalk@^1.8.0/dist/gitalk.min.js"></script><link rel="stylesheet" href="https://unpkg.com/gitalk@^1.8.0/dist/gitalk.css"/><style>::selection {
+  background: #00000000;
+  color: #f00;
+}
+
+.icon {
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}
+
+pre::selection,
+pre ::selection {
+  #00000000;
+}
+</style><link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/lxgw-wenkai-screen-webfont/1.7.0/style.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/css/fontawesome.min.css"><style>*{font-family: LXGW WenKai Screen;}</style><style>.copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  background-color: var(--background-primary);
+  color: var(--text-title-h1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  border: none;
+  padding: 4px 10px;
+  font-size: 13px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.copy-btn:hover {
+  background-color: var(--background-secondary-alt);
+  color: #fff}pre code{width: 100%;background-color: var(--background-primary) !important;}pre{border-radius: .3rem;padding: 10px;background-color: var(--background-primary) !important;}</style><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body id="body-container"><noscript><strong>We're sorry but this app doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app"></div><!-- hexo injector body_end start --><script src="https://fastly.jsdelivr.net/gh/EmoryHuang/BlogBeautify@1.1/star.min.js"></script><script src="https://static.kevinchu.top/blog/assets/js/typing-effect.js"></script><script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.7.2/js/all.min.js"></script><script>
+  document.addEventListener("DOMContentLoaded", function () {
+    setInterval(() => {
+      document.querySelectorAll('pre code').forEach(function (codeElement) {
+        if (codeElement.classList.contains("cpcded")) return;
+        codeElement.classList.add("cpcded");
+        const preBlock = codeElement.parentElement;
+        const button = document.createElement('button');
+        button.className = 'copy-btn';
+        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        svg.setAttribute("viewBox", "0 0 448 512");
+        svg.setAttribute("width", "16");
+        svg.setAttribute("height", "16");
+        svg.setAttribute("fill", "currentColor");
+        svg.innerHTML = `
+          <path fill="currentColor"
+            d="M208 0L332.1 0c12.7 0 24.9 5.1 33.9 14.1l67.9 67.9c9 9 14.1 21.2 14.1 33.9L448 336c0 26.5-21.5 48-48 48l-192 0c-26.5 0-48-21.5-48-48l0-288c0-26.5 21.5-48 48-48zM48 128l80 0 0 64-64 0 0 256 192 0 0-32 64 0 0 48c0 26.5-21.5 48-48 48L48 512c-26.5 0-48-21.5-48-48L0 176c0-26.5 21.5-48 48-48z">
+          </path>
+        `;
+        button.appendChild(svg);
+        button.addEventListener('click', async () => {
+          const code = codeElement.textContent;
+          try {
+            await navigator.clipboard.writeText(code);
+            svg.innerHTML = `
+              <path fill="currentColor"
+                d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z">
+              </path>
+            `;
+            setTimeout(() => {
+              svg.innerHTML = `
+                <path fill="currentColor"
+                  d="M208 0L332.1 0c12.7 0 24.9 5.1 33.9 14.1l67.9 67.9c9 9 14.1 21.2 14.1 33.9L448 336c0 26.5-21.5 48-48 48l-192 0c-26.5 0-48-21.5-48-48l0-288c0-26.5 21.5-48 48-48zM48 128l80 0 0 64-64 0 0 256 192 0 0-32 64 0 0 48c0 26.5-21.5 48-48 48L48 512c-26.5 0-48-21.5-48-48L0 176c0-26.5 21.5-48 48-48z">
+                </path>
+              `;
+            }, 3000);
+          } catch (err) {
+            alert('复制失败：' + err);
+          }
+        });
+        preBlock.style.position = 'relative';
+        preBlock.appendChild(button);
+      });
+    }, 2000);
+  });
+</script><!-- hexo injector body_end end --></body></html>
